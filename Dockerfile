@@ -17,6 +17,7 @@ COPY . .
 
 # Collecter les fichiers statiques
 RUN python manage.py collectstatic --noinput
+RUN ls -la /app/staticfiles/
 
 # Exposer le port
 EXPOSE 8000
