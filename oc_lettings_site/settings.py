@@ -28,7 +28,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # Default values for local dev
-default_origins = ['http://localhost:8000', 'http://127.0.0.1:8000']
+default_origins = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'https://oc-13-ocl-dockertest.onrender.com'
+]
 
 
 # If value defined, use it
