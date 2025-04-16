@@ -27,10 +27,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 
+# Default values for local dev
+default_origins = ['http://localhost:8000', 'http://127.0.0.1:8000']
+
+
+# If value defined, use it
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', ' '.join(default_origins)).split(' ')
+
+
+# Extract hôsts from URLs for ALLOWED_HOSTS
+ALLOWED_HOSTS = []
+for origin in CSRF_TRUSTED_ORIGINS:
+    try:
+        # Extracting hostname from URL (removes protocol and port)
+        from urllib.parse import urlparse
+        host = urlparse(origin).netloc.split(':')[0]
+        if host:
+            ALLOWED_HOSTS.append(host)
+    except:
+        continue
+
+
+# Adding default values for ALLOWED_HOSTS
+ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
+
+
 # Application definition
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'oc_lettings_site.apps.OCLettingsSiteConfig',
@@ -46,6 +69,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -114,15 +138,18 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# Configuration WhiteNoise pour la production
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Production safety switch
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True  # Force redirection from HTTP to HTTPS
-    SESSION_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
-    CSRF_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
-    SECURE_BROWSER_XSS_FILTER = True  # Added injection script protection
-    SECURE_CONTENT_TYPE_NOSNIFF = True  # Added injection script protection
-    X_FRAME_OPTIONS = 'DENY'  # Added clickjacking protection
+    SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
+    CSRF_USE_SESSIONS = True # CSRF token into session 
+    # SESSION_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
+    # CSRF_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
+    # SECURE_BROWSER_XSS_FILTER = True  # Added injection script protection
+    # SECURE_CONTENT_TYPE_NOSNIFF = True  # Added injection script protection
+    # X_FRAME_OPTIONS = 'DENY'  # Added clickjacking protection
     # SECURE_HSTS_SECONDS = 31536000  # 1 year HTTPS token
     # SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Adds subdomains
     # SECURE_HSTS_PRELOAD = True  # Appends the preload directive to the Strict-Transport-Security header
