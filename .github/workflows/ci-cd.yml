@@ -87,7 +87,7 @@ jobs:
         chmod +x run_docker_local.sh
 
     - name: Upload local testing script
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: run_docker_local
         path: run_docker_local.sh
