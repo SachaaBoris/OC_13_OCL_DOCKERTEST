@@ -38,14 +38,11 @@ CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', ' '.join(default_o
 # Extract hôsts from URLs for ALLOWED_HOSTS
 ALLOWED_HOSTS = []
 for origin in CSRF_TRUSTED_ORIGINS:
-    try:
-        # Extracting hostname from URL (removes protocol and port)
-        from urllib.parse import urlparse
-        host = urlparse(origin).netloc.split(':')[0]
-        if host:
-            ALLOWED_HOSTS.append(host)
-    except:
-        continue
+    # Extracting hostname from URL (removes protocol and port)
+    from urllib.parse import urlparse
+    host = urlparse(origin).netloc.split(':')[0]
+    if host:
+        ALLOWED_HOSTS.append(host)
 
 
 # Adding default values for ALLOWED_HOSTS
@@ -138,13 +135,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-# Configuration WhiteNoise pour la production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Production safety switch
+# Production switches
 if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # Configuration WhiteNoise pour la production
     SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
-    CSRF_USE_SESSIONS = True # CSRF token into session 
+    CSRF_USE_SESSIONS = True  # CSRF token into session
     # SESSION_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
     # CSRF_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
     # SECURE_BROWSER_XSS_FILTER = True  # Added injection script protection
