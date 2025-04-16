@@ -8,6 +8,7 @@ from oc_lettings_site.sentry_config import initialize_sentry
 
 
 # Load environment variables
+
 load_dotenv()
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 env_str = "production"
@@ -16,18 +17,22 @@ if DEBUG:
 
 
 # Load Sentry
+
 initialize_sentry(env_str)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # Default values for local dev
+
 default_origins = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
@@ -36,10 +41,12 @@ default_origins = [
 
 
 # If value defined, use it
+
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', ' '.join(default_origins)).split(' ')
 
 
 # Extract hôsts from URLs for ALLOWED_HOSTS
+
 ALLOWED_HOSTS = []
 for origin in CSRF_TRUSTED_ORIGINS:
     # Extracting hostname from URL (removes protocol and port)
@@ -54,6 +61,7 @@ ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
 
 
 # Application definition
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INSTALLED_APPS = [
@@ -138,9 +146,12 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+WHITENOISE_MAX_AGE = 0
 
 
 # Production switches
+
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # WhiteNoise
     SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
