@@ -110,7 +110,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
 
 
-# Database
+# Database setup
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 DATABASES = {
     'default': {
