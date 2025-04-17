@@ -30,9 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # Default values for local dev
 default_origins = [
     'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'https://oc-13-ocl-dockertest.onrender.com',
-    'https://oc-13-ocl-dockertest2.onrender.com'
+    'http://127.0.0.1:8000'
 ]
 
 
@@ -54,9 +52,7 @@ for origin in CSRF_TRUSTED_ORIGINS:
 ALLOWED_HOSTS.extend(
     [
         'localhost',
-        '127.0.0.1',
-        'oc-13-ocl-dockertest.onrender.com',
-        'oc-13-ocl-dockertest2.onrender.com'
+        '127.0.0.1'
     ]
 )
 
