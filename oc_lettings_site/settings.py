@@ -8,7 +8,6 @@ from oc_lettings_site.sentry_config import initialize_sentry
 
 
 # Load environment variables
-
 load_dotenv()
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 env_str = "production"
@@ -17,22 +16,18 @@ if DEBUG:
 
 
 # Load Sentry
-
 initialize_sentry(env_str)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # Default values for local dev
-
 default_origins = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
@@ -41,12 +36,10 @@ default_origins = [
 
 
 # If value defined, use it
-
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', ' '.join(default_origins)).split(' ')
 
 
-# Extract hôsts from URLs for ALLOWED_HOSTS
-
+# Extract hosts from URLs for ALLOWED_HOSTS
 ALLOWED_HOSTS = []
 for origin in CSRF_TRUSTED_ORIGINS:
     # Extracting hostname from URL (removes protocol and port)
@@ -57,11 +50,10 @@ for origin in CSRF_TRUSTED_ORIGINS:
 
 
 # Adding default values for ALLOWED_HOSTS
-ALLOWED_HOSTS.extend(['localhost', '127.0.0.1'])
+ALLOWED_HOSTS.extend(['localhost', '127.0.0.1', 'oc-13-ocl-dockertest.onrender.com'])
 
 
 # Application definition
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INSTALLED_APPS = [
@@ -110,7 +102,6 @@ WSGI_APPLICATION = 'oc_lettings_site.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -121,7 +112,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
@@ -132,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -142,7 +131,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
@@ -151,7 +139,6 @@ WHITENOISE_MAX_AGE = 0
 
 
 # Production switches
-
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # WhiteNoise
     SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
