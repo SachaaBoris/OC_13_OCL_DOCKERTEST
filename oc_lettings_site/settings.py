@@ -32,7 +32,7 @@ default_origins = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'https://oc-13-ocl-dockertest.onrender.com',
-    'render-docker-demo.onrender.com'
+    'https://render-docker-demo.onrender.com'
 ]
 
 
