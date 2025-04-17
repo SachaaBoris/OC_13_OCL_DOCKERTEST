@@ -32,7 +32,7 @@ default_origins = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'https://oc-13-ocl-dockertest.onrender.com',
-    'https://render-docker-demo.onrender.com'
+    'https://oc-13-ocl-dockertest2.onrender.com'
 ]
 
 
@@ -56,9 +56,15 @@ ALLOWED_HOSTS.extend(
         'localhost',
         '127.0.0.1',
         'oc-13-ocl-dockertest.onrender.com',
-        'render-docker-demo.onrender.com'
+        'oc-13-ocl-dockertest2.onrender.com'
     ]
 )
+
+
+# Set by render automatically
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOST)
 
 
 # Application definition
@@ -148,9 +154,11 @@ WHITENOISE_MAX_AGE = 0
 
 # Production switches
 if not DEBUG:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # WhiteNoise
-    SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
-    CSRF_USE_SESSIONS = True  # CSRF token into session
+    STATICFILES_STORAGE = (
+        'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    )  # WhiteNoise
+    # SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
+    # CSRF_USE_SESSIONS = True  # CSRF token into session
     # SESSION_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
     # CSRF_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
     # SECURE_BROWSER_XSS_FILTER = True  # Added injection script protection
