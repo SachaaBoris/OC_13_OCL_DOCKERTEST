@@ -148,18 +148,8 @@ WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 WHITENOISE_MAX_AGE = 0
 
 
-# Production switches
+# Production switch
 if not DEBUG:
     STATICFILES_STORAGE = (
         'whitenoise.storage.CompressedManifestStaticFilesStorage'
     )  # WhiteNoise
-    # SECURE_SSL_REDIRECT = False  # Force redirection from HTTP to HTTPS
-    # CSRF_USE_SESSIONS = True  # CSRF token into session
-    # SESSION_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
-    # CSRF_COOKIE_SECURE = True  # Prevents sessions from being stolen via unsecure HTTP
-    # SECURE_BROWSER_XSS_FILTER = True  # Added injection script protection
-    # SECURE_CONTENT_TYPE_NOSNIFF = True  # Added injection script protection
-    # X_FRAME_OPTIONS = 'DENY'  # Added clickjacking protection
-    # SECURE_HSTS_SECONDS = 31536000  # 1 year HTTPS token
-    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Adds subdomains
-    # SECURE_HSTS_PRELOAD = True  # Appends the preload directive to the STS header
